@@ -5,6 +5,7 @@
 #include "SDL2/SDL.h"       // for rects/textures/renderer ptrs
 #include <string>           // asset file path 
 #include <memory>           // smart pointers used by this class
+#include <utility>          // std::move
 
 class GameObject
 {
@@ -17,7 +18,7 @@ class GameObject
 
     public:
         GameObject();
-        GameObject(std::string, SDL_Rect&, SDL_Rect&, SDL_Texture&, SDL_Renderer&);
+        GameObject(std::unique_ptr<SDL_Texture>, std::unique_ptr<SDL_Rect>, std::shared_ptr<SDL_Renderer>);
         
         void setAssetFilePath(std::string);
         void setCollisionRectangle(SDL_Rect&);
