@@ -3,11 +3,10 @@
 #include <string>
 #include <memory>
 
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
-#ifndef __GAMEOBJECT_H__
-#define __GAMEOBJECT_H__
-
-class gameObject
+class GameObject
 {
     protected:
         std::unique_ptr<SDL_Rect> collisionRectangle;
@@ -17,7 +16,8 @@ class gameObject
         std::string assetFilepath;
 
     public:
-        gameObject();
+        GameObject();
+        GameObject(std::string, SDL_Rect&, SDL_Rect&, SDL_Texture&, SDL_Renderer&);
         
         void setAssetFilePath(std::string);
         void setCollisionRectangle(SDL_Rect&);
