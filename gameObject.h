@@ -1,10 +1,10 @@
 // game object header file
-#include "SDL2/SDL.h"
-#include <string>
-#include <memory>
-
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
+
+#include "SDL2/SDL.h"       // for rects/textures/renderer ptrs
+#include <string>           // asset file path 
+#include <memory>           // smart pointers used by this class
 
 class GameObject
 {
