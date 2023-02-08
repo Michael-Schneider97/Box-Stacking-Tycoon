@@ -10,7 +10,7 @@ GameObject::GameObject()
     return;
 }
 
-// premade texture constructor (same collision hitbox)
+// constructor using a premade texture and rect 
 GameObject::GameObject(std::unique_ptr<SDL_Texture> theObjectTexture, std::unique_ptr<SDL_Rect> uniqueRect, std::shared_ptr<SDL_Renderer> theRenderer)
 {
     // i dont really know how to use smart pointers...
@@ -21,11 +21,12 @@ GameObject::GameObject(std::unique_ptr<SDL_Texture> theObjectTexture, std::uniqu
     return;
 }
 
-
-// menu is a game object
-// each button is a game object
-// a game object has a collision box,
-//                     visual box,
-//                     string filepath,
-//                     reference to the renderer
-//                     texture reference
+void GameObject::draw()
+{
+    // possible case for try/throw/catch here?
+    if(texture && textureRectangle)
+    {
+        SDL_RenderCopy(gameRenderer.get(), texture.get(), NULL, textureRectangle.get());
+    }
+    return;
+}
