@@ -1,21 +1,11 @@
+// Note: Inclusion of SDL_image will allow refactoring of the setup texture function to be a bit more optimized
 #include "gameObject.h"
 
 // default constructor
-GameObject::GameObject()
+GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture)
 {
     // we leave the pointers as empty and set them later
     assetFilepath = "";
-    return;
-}
-
-// constructor using a premade texture and rect 
-GameObject::GameObject(std::unique_ptr<SDL_Texture> theObjectTexture, std::unique_ptr<SDL_Rect> uniqueRect, std::shared_ptr<SDL_Renderer> theRenderer)
-{
-    // i dont really know how to use smart pointers...
-    // question: is an exception possible here?
-    texture = std::move(theObjectTexture);
-    textureRectangle = std::move(uniqueRect);
-    gameRenderer = theRenderer;
     return;
 }
 
@@ -55,12 +45,18 @@ SDL_Rect* GameObject::getRectangle()
 
 void GameObject::setupTexture()
 {
-    std::unique_ptr<SDL_Surface> tempSurface(SDL_LoadBMP(assetFilepath.c_str()), SDL_FreeSurface());
-    if(tempSurface)
-    {
-        texture = std::make_unique(SDL_CreateTextureFromSurface(gameRenderer.get(), tempSurface.get()));
-    }
-}
+    // initialize 
+    auto tempSurface = // we pass the SDL delete function and a function that returns a pointer
+    std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)>(SDL_LoadBMP(assetFilepath.c_str()), SDL_FreeSurface);
 
-// go over this entire file,
-// adjust the unique_ptr usages
+    if(tempSurface.get())
+    {
+        auto tempTexture = // we convert the temp surface to a texture
+        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(gameRenderer.get(), tempSurface.get()), SDL_DestroyTexture);
+        // smart pointer takes ownership of the texture
+        texture = std::move(tempTexture);
+        return;
+    }
+
+    return;
+}
