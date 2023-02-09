@@ -10,18 +10,17 @@
 class GameObject
 {
     protected:
-        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> texture;   // passing SDL destructor to the pointer
+        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> texture;    // passing SDL destructor to the pointer
         std::unique_ptr<SDL_Rect> textureRectangle;
-        std::shared_ptr<SDL_Renderer> gameRenderer;
+        std::shared_ptr<SDL_Renderer> gameRenderer;                             // this could be a raw ptr or reference since it wont be deleted before this object is
         std::string assetFilepath;
 
     public:
         GameObject();
-        GameObject(std::unique_ptr<SDL_Texture>, std::unique_ptr<SDL_Rect>, std::shared_ptr<SDL_Renderer>);
         GameObject(std::string, int, int, int, int);
         GameObject(std::string, SDL_Rect&);
         
-        SDL_Rect* GameObject::getRectangle();
+        SDL_Rect* getRectangle();
         void draw();
     
     private:
