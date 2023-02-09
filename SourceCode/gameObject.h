@@ -10,6 +10,7 @@
 class GameObject
 {
     protected:
+        // hand the ptrs the sdl destructors
         std::unique_ptr<SDL_Texture> texture;
         std::unique_ptr<SDL_Rect> textureRectangle;
         std::shared_ptr<SDL_Renderer> gameRenderer;
@@ -18,8 +19,21 @@ class GameObject
     public:
         GameObject();
         GameObject(std::unique_ptr<SDL_Texture>, std::unique_ptr<SDL_Rect>, std::shared_ptr<SDL_Renderer>);
-
+        GameObject(std::string, int, int, int, int);
+        GameObject(std::string, SDL_Rect&);
+        
+        SDL_Rect* GameObject::getRectangle();
         void draw();
+    
+    private:
+        void GameObject::setupTexture();
 };
 
 #endif
+
+// how objects are made
+// we take a string referencing a file
+// we use that to create a surface
+// we convert the surface to a texture
+// we destroy the surface
+// we pass a reference to that texture as well as one to the corresponding rect we use
