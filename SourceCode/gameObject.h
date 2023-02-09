@@ -10,7 +10,7 @@
 class GameObject
 {
     protected:
-        std::unique_ptr<SDL_Texture, decltype(&SDL_FreeSurface)> texture;   // passing SDL destructor to the pointer
+        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> texture;   // passing SDL destructor to the pointer
         std::unique_ptr<SDL_Rect> textureRectangle;
         std::shared_ptr<SDL_Renderer> gameRenderer;
         std::string assetFilepath;
