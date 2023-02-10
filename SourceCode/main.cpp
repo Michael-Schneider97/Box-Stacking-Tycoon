@@ -11,6 +11,7 @@
 #include <SDL2/SDL.h>   // its for.... yknow, sdl
 #include <string>       // strings 
 #include <vector>       // vectors used by menu class and stack / list systems
+#include "menu.h"
 
 void mainMenuFunction();
 
@@ -29,3 +30,17 @@ int main()
     SDL_Quit();
     return 0;
 }
+
+// we bouta menu it up boiiii
+void mainMenuFunction()
+{
+    // start by figuring out the display stuff
+    // we need to know whether the user wants fullscreen, windowless, or some size
+    // once we know we create the window and setup stuff with it
+    const int initialWidth = 800,
+              initialHeight = 600;
+
+    
+
+}
+
