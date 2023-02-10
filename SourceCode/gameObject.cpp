@@ -10,7 +10,7 @@ GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture)
 }
 
 // constructor that uses a string and some ints 
-GameObject::GameObject(std::string theFile, int width, int height, int positionX, int positionY)
+GameObject::GameObject(std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
 {
     // setup the filepath
     assetFilepath = theFile;
