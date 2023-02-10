@@ -60,3 +60,13 @@ void GameObject::setupTexture()
 
     return;
 }
+
+// utilities
+// returns true if mouse is inside the rect of the game object
+bool GameObject::mouseOver(int mouseX, int mouseY)
+{
+    return (
+            mouseX >= textureRectangle.get()->x && mouseX <= textureRectangle.get()->x + textureRectangle.get()->w && 
+            mouseY >= textureRectangle.get()->y && mouseY <= textureRectangle.get()->y + textureRectangle.get()->h
+        );
+}

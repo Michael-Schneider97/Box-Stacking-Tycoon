@@ -22,6 +22,7 @@ class GameObject
         
         SDL_Rect* getRectangle();
         void draw();
+        bool mouseOver(int, int);
     
     private:
         void GameObject::setupTexture();
