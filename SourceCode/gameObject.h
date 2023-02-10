@@ -14,6 +14,8 @@ class GameObject
         std::unique_ptr<SDL_Rect> textureRectangle;
         std::shared_ptr<SDL_Renderer> gameRenderer;                             // this could be a raw ptr or reference since it wont be deleted before this object is
         std::string assetFilepath;
+        bool drawBackground;
+        SDL_Color baseColor;
 
     public:
         GameObject();

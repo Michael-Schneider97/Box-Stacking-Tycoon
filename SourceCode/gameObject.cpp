@@ -2,7 +2,7 @@
 #include "gameObject.h"
 
 // default constructor
-GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture)
+GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0, 0, 255}, drawBackground {false}
 {
     // we leave the pointers as empty and set them later
     assetFilepath = "";
@@ -34,6 +34,12 @@ void GameObject::draw()
     {
         SDL_RenderCopy(gameRenderer.get(), texture.get(), NULL, textureRectangle.get());
     }
+
+    // use some color as background
+    else if (textureRectangle)
+    {
+        SDL_SetRenderDrawColor(gameRenderer.get(), baseColor.r, baseColor.g, baseColor.b, baseColor.a);
+    }
     return;
 }
 
@@ -51,6 +57,7 @@ void GameObject::setupTexture()
 
     if(tempSurface.get())
     {
+        drawBackground = true;
         auto tempTexture = // we convert the temp surface to a texture
         std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(gameRenderer.get(), tempSurface.get()), SDL_DestroyTexture);
         // smart pointer takes ownership of the texture
@@ -58,6 +65,7 @@ void GameObject::setupTexture()
         return;
     }
 
+    drawBackground = false;
     return;
 }
 
