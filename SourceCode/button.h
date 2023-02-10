@@ -7,9 +7,12 @@
 class Button : public GameObject
 {
     protected:
-
+        bool clickable; 
     public:
         Button();
+
+        void setClickable(bool);
+        bool getClickable();
 };
 
 #endif
