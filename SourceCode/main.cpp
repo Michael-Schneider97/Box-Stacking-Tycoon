@@ -50,5 +50,12 @@ void mainMenuFunction()
     auto theRenderer = 
     std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)));
 
+    // create a menu 
+    Menu graphicMenu(initialWidth, initialHeight, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    graphicMenu.setupTitle();
+    graphicMenu.addButton();
+    graphicMenu.addButton();
+    graphicMenu.addButton();
+
 }
 
