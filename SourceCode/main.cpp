@@ -40,7 +40,15 @@ void mainMenuFunction()
     const int initialWidth = 800,
               initialHeight = 600;
 
+    const std::string title = "Box Stacking Tycoon (Setup Display)";
+
+    // create a window
+    auto theWindow = 
+    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, initialWidth, initialHeight, NULL), SDL_DestroyWindow);
     
+    // create a renderer
+    auto theRenderer = 
+    std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)));
 
 }
 

@@ -10,6 +10,7 @@
 class Menu : public GameObject
 {
     protected:
+        GameObject title;
         std::vector<Button> buttonList;
         int buttonSpacing;
         int titleSpacing;
