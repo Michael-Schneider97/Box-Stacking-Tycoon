@@ -25,7 +25,7 @@ build: $(program)
 $(program): main.o 
 	$(linker) $(linkerFlags) *.o -o "$@" $(sdl2Stuff)
 
-main.o: main.cpp
+main.o: ../SourceCode/main.cpp
 	$(cppCompiler) $(cppCompilerFlags) "$<" -o "$@"
 	
 clean: rm *.o 

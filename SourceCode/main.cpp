@@ -11,7 +11,7 @@
 #include <SDL2/SDL.h>   // its for.... yknow, sdl
 #include <string>       // strings 
 #include <vector>       // vectors used by menu class and stack / list systems
-#include "menu.h"
+#include <memory>
 
 void mainMenuFunction();
 
@@ -34,28 +34,34 @@ int main()
 // we bouta menu it up boiiii
 void mainMenuFunction()
 {
-    // start by figuring out the display stuff
-    // we need to know whether the user wants fullscreen, windowless, or some size
-    // once we know we create the window and setup stuff with it
-    const int initialWidth = 800,
-              initialHeight = 600;
-
+    // variables
     const std::string title = "Box Stacking Tycoon (Setup Display)";
+    int screenWidth = 0, screenHeight = 0;
+
+    // get window size
+    SDL_DisplayMode displayMode;
+    if(SDL_GetDesktopDisplayMode(0, &displayMode) != 0)
+    {
+        std::cout << "display mode call fail\n";
+        return;
+    }
 
     // create a window
     auto theWindow = 
-    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, initialWidth, initialHeight, NULL), SDL_DestroyWindow);
-    
+    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, displayMode.w, displayMode.h, SDL_WINDOW_RESIZABLE), SDL_DestroyWindow);
+    SDL_MaximizeWindow(theWindow.get());
+
     // create a renderer
     auto theRenderer = 
-    std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)));
+    std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)), SDL_DestroyRenderer);
+    SDL_GetRendererOutputSize(theRenderer.get(), &screenWidth, &screenHeight);
 
-    // create a menu 
-    Menu graphicMenu(initialWidth, initialHeight, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-    graphicMenu.setupTitle();
-    graphicMenu.addButton();
-    graphicMenu.addButton();
-    graphicMenu.addButton();
+    int i = 0;
+    while(i < 1000)
+    {
+        i++;
+        SDL_RenderPresent(theRenderer.get());
+    }
 
 }
 
