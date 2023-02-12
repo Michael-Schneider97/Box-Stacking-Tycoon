@@ -12,7 +12,7 @@ class GameObject
     protected:
         std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> texture;    // passing SDL destructor to the pointer
         std::unique_ptr<SDL_Rect> textureRectangle;
-        std::shared_ptr<SDL_Renderer> gameRenderer;                             // this could be a raw ptr or reference since it wont be deleted before this object is
+        SDL_Renderer &gameRenderer;                             // this could be a raw ptr or reference since it wont be deleted before this object is
         std::string assetFilepath;
         bool drawBackground;
         SDL_Color baseColor;
@@ -27,7 +27,7 @@ class GameObject
         bool mouseOver(int, int);
     
     private:
-        void GameObject::setupTexture();
+        void setupTexture();
 };
 
 #endif

@@ -32,13 +32,13 @@ void GameObject::draw()
     // possible case for try/throw/catch here?
     if(texture && textureRectangle)
     {
-        SDL_RenderCopy(gameRenderer.get(), texture.get(), NULL, textureRectangle.get());
+        SDL_RenderCopy(&gameRenderer, texture.get(), NULL, textureRectangle.get());
     }
 
     // use some color as background
     else if (textureRectangle)
     {
-        SDL_SetRenderDrawColor(gameRenderer.get(), baseColor.r, baseColor.g, baseColor.b, baseColor.a);
+        SDL_SetRenderDrawColor(&gameRenderer, baseColor.r, baseColor.g, baseColor.b, baseColor.a);
     }
     return;
 }
@@ -59,7 +59,7 @@ void GameObject::setupTexture()
     {
         drawBackground = true;
         auto tempTexture = // we convert the temp surface to a texture
-        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(gameRenderer.get(), tempSurface.get()), SDL_DestroyTexture);
+        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(&gameRenderer, tempSurface.get()), SDL_DestroyTexture);
         // smart pointer takes ownership of the texture
         texture = std::move(tempTexture);
         return;
