@@ -2,15 +2,14 @@
 #include "gameObject.h"
 
 // default constructor
-GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0, 0, 255}, drawBackground {false}
+GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0, 0, 255}, drawBackground {false}, gameRenderer {NULL}
 {
-    // we leave the pointers as empty and set them later
     assetFilepath = "";
     return;
 }
 
 // constructor that uses a string and some ints 
-GameObject::GameObject(std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
+GameObject::GameObject(SDL_Renderer &renderer, std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
 {
     // setup the filepath
     assetFilepath = theFile;
@@ -22,6 +21,9 @@ GameObject::GameObject(std::string theFile, int width, int height, int positionX
     textureRectangle.get()->x = positionX;
     textureRectangle.get()->y = positionY;
 
+    // renderer
+    gameRenderer = &renderer;
+
     // setup the texture
     setupTexture();
 }
@@ -32,13 +34,13 @@ void GameObject::draw()
     // possible case for try/throw/catch here?
     if(texture && textureRectangle)
     {
-        SDL_RenderCopy(&gameRenderer, texture.get(), NULL, textureRectangle.get());
+        SDL_RenderCopy(gameRenderer, texture.get(), NULL, textureRectangle.get());
     }
 
     // use some color as background
     else if (textureRectangle)
     {
-        SDL_SetRenderDrawColor(&gameRenderer, baseColor.r, baseColor.g, baseColor.b, baseColor.a);
+        SDL_SetRenderDrawColor(gameRenderer, baseColor.r, baseColor.g, baseColor.b, baseColor.a);
     }
     return;
 }
@@ -59,7 +61,7 @@ void GameObject::setupTexture()
     {
         drawBackground = true;
         auto tempTexture = // we convert the temp surface to a texture
-        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(&gameRenderer, tempSurface.get()), SDL_DestroyTexture);
+        std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(SDL_CreateTextureFromSurface(gameRenderer, tempSurface.get()), SDL_DestroyTexture);
         // smart pointer takes ownership of the texture
         texture = std::move(tempTexture);
         return;
