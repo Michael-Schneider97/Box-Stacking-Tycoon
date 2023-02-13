@@ -9,36 +9,46 @@ Menu::Menu() : GameObject()
 }
 
 // parameterized constructor
-Menu::Menu(std::string filePath, int width, int height, int x, int y) : GameObject(filepath, width, height, x, y)
+// takes arguments to load texture and create rect using gameobj constructor
+Menu::Menu(SDL_Renderer *renderer, std::string filePath, int width, int height, int x, int y) : GameObject(renderer, filePath, width, height, x, y)
 {
     assetFilepath = filePath;
+    return;
 }
 
 // constructor that just stores the background as a solid color
-Menu::Menu(int width, int height, int x, int y) : GameObject("", width, height, x, y)
+Menu::Menu(SDL_Renderer *renderer, int width, int height, int x, int y, SDL_Color color) : GameObject(renderer, "", width, height, x, y)
 {
     
 }
 
 // automatic button & title placement
-void autoGenerateMenu()
+void Menu::autoGenerate()
 {
 
 }
 
 // redefined draw
-void draw()
+void Menu::draw()
 {
-
+    GameObject::draw();
+    
+    title.draw();
+    
+    for(int i = 0; i < buttonList.size(); i++)
+    {
+        buttonList[i].draw();
+    }
+    return;
 }
 
 // button stuff
-void setupTitle()
+void Menu::addTitle()
 {
-
+    title.getRectangle()->h = 10;
 }
 
-void addButton()
+void Menu::addButton()
 {
 
 }

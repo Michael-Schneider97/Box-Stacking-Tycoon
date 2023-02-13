@@ -10,7 +10,6 @@ class Button : public GameObject
         bool clickable; 
     public:
         Button();
-
         void setClickable(bool);
         bool getClickable();
 };

@@ -9,7 +9,7 @@ GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0
 }
 
 // constructor that uses a string and some ints 
-GameObject::GameObject(SDL_Renderer &renderer, std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
+GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
 {
     // setup the filepath
     assetFilepath = theFile;
@@ -32,13 +32,13 @@ GameObject::GameObject(SDL_Renderer &renderer, std::string theFile, int width, i
 void GameObject::draw()
 {
     // possible case for try/throw/catch here?
-    if(texture && textureRectangle)
+    if(texture && textureRectangle && gameRenderer)
     {
         SDL_RenderCopy(gameRenderer, texture.get(), NULL, textureRectangle.get());
     }
 
     // use some color as background
-    else if (textureRectangle)
+    else if (textureRectangle && gameRenderer)
     {
         SDL_SetRenderDrawColor(gameRenderer, baseColor.r, baseColor.g, baseColor.b, baseColor.a);
     }

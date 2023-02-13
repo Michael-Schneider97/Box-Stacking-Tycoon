@@ -21,7 +21,7 @@ class GameObject
 
     public:
         GameObject();
-        GameObject(SDL_Renderer &renderer, std::string theFile, int width, int height, int positionX, int positionY);
+        GameObject(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY);
         GameObject(std::string, SDL_Rect&);
         
         SDL_Rect* getRectangle();

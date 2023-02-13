@@ -17,8 +17,13 @@ class Menu : public GameObject
 
     public:
         Menu();
+        Menu(SDL_Renderer *renderer, std::string filePath, int width, int height, int x, int y);
+        Menu(SDL_Renderer *renderer, int width, int height, int x, int y, SDL_Color color);
         void draw();
         void generateRectangles();
+        void addTitle();
+        void addButton();
+        void autoGenerate();
 };
 
 #endif

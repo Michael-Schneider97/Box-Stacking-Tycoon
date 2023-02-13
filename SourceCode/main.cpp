@@ -11,6 +11,7 @@
 #include <SDL2/SDL.h>   // its for.... yknow, sdl
 #include <string>       // strings 
 #include <vector>       // vectors used by menu class and stack / list systems
+#include "menu.h"
 #include <memory>
 
 void mainMenuFunction();
@@ -35,8 +36,15 @@ int main()
 void mainMenuFunction()
 {
     // variables
-    const std::string title = "Box Stacking Tycoon (Setup Display)";
-    int screenWidth = 0, screenHeight = 0;
+    const std::string title = "Box Stacking Tycoon (Setup Display)",
+                      menuBackground = "../Assets/mainMenuBackground.bmp";
+
+    int screenWidth = 0, screenHeight = 0, 
+        mousePositionX = 0, mousePositionY = 0;
+    
+    bool quit = false;
+    SDL_Color black = {0, 0, 0, 255};
+    SDL_Event userInput;
 
     // get window size
     SDL_DisplayMode displayMode;
@@ -49,19 +57,31 @@ void mainMenuFunction()
     // create a window
     auto theWindow = 
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, displayMode.w, displayMode.h, SDL_WINDOW_RESIZABLE), SDL_DestroyWindow);
-    SDL_MaximizeWindow(theWindow.get());
+    // For some reason the above function call does not really center the window, so the next one moves it to where it actually should go
+    SDL_MaximizeWindow(theWindow.get());    
 
     // create a renderer
     auto theRenderer = 
     std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)), SDL_DestroyRenderer);
     SDL_GetRendererOutputSize(theRenderer.get(), &screenWidth, &screenHeight);
 
-    int i = 0;
-    while(i < 1000)
-    {
-        i++;
-        SDL_RenderPresent(theRenderer.get());
-    }
+    // create the menu
+    Menu mainMenu(theRenderer.get(), menuBackground, screenWidth, screenHeight, 0, 0);
 
+    //mainMenu.addTitle();
+    //mainMenu.addButton();
+    //mainMenu.addButton();
+    
+    do
+    {
+        while(SDL_PollEvent(&userInput))
+        {
+            if(userInput.type = SDL_QUIT)
+            {
+                quit = true;
+            }
+        }
+
+    } while (!quit);
 }
 

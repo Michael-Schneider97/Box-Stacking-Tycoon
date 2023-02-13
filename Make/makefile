@@ -22,10 +22,16 @@ run: build
 
 build: $(program)
 
-$(program): main.o 
+$(program): main.o gameObject.o menu.o
 	$(linker) $(linkerFlags) *.o -o "$@" $(sdl2Stuff)
 
 main.o: ../SourceCode/main.cpp
+	$(cppCompiler) $(cppCompilerFlags) "$<" -o "$@"
+
+gameObject.o: ../SourceCode/gameObject.cpp
+	$(cppCompiler) $(cppCompilerFlags) "$<" -o "$@"
+
+menu.o: ../SourceCode/menu.cpp gameObject.o
 	$(cppCompiler) $(cppCompilerFlags) "$<" -o "$@"
 	
 clean: rm *.o 
