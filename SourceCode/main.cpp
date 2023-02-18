@@ -11,8 +11,9 @@
 #include <SDL2/SDL.h>   // its for.... yknow, sdl
 #include <string>       // strings 
 #include <vector>       // vectors used by menu class and stack / list systems
-#include "menu.h"
 #include <memory>
+
+#include "menu.h"
 
 void mainMenuFunction();
 
@@ -74,9 +75,11 @@ void mainMenuFunction()
     
     do
     {
+        mainMenu.draw();
+        SDL_RenderPresent(theRenderer.get());
         while(SDL_PollEvent(&userInput))
         {
-            if(userInput.type = SDL_QUIT)
+            if(userInput.type == SDL_QUIT)
             {
                 quit = true;
             }

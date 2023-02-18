@@ -22,7 +22,7 @@ GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, i
     textureRectangle.get()->y = positionY;
 
     // renderer
-    gameRenderer = &renderer;
+    gameRenderer = renderer;
 
     // setup the texture
     setupTexture();
