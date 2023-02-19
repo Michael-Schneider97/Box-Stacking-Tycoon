@@ -83,6 +83,7 @@ void mainMenuFunction()
     
     do
     {
+        SDL_GetMouseState(&mousePositionX, &mousePositionY);
         mainMenu.draw();
         SDL_RenderPresent(theRenderer.get());
         while(SDL_PollEvent(&userInput))
