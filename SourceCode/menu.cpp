@@ -1,6 +1,7 @@
 // the menu class, which uses SDL2 to create a framework for a menu based system 
 
 #include "menu.h"
+#include <iostream>
 
 // defualt constructor
 Menu::Menu() : GameObject()
@@ -23,8 +24,22 @@ Menu::Menu(SDL_Renderer *renderer, int width, int height, int x, int y, SDL_Colo
 }
 
 // automatic button & title placement
-void Menu::autoGenerate()
+void Menu::autoGenerate(int screenWidth, int screenHeight)
 {
+    // used to calculate rect widths and heights
+    int titleWidthPercent, titleAspect, titleWidth, titleHeight, titleBuffer;
+
+    titleWidthPercent = 20;
+    titleAspect = 3;
+
+    titleWidth = screenWidth * titleWidthPercent / 100;
+    titleHeight = titleWidth / titleAspect;
+    titleBuffer = titleHeight;
+
+    title.getRectangle()->y = titleBuffer;
+    title.getRectangle()->w = titleWidth;
+    title.getRectangle()->h = titleHeight;
+    title.getRectangle()->x = (screenWidth / 2) - (titleWidth / 2);
 
 }
 
@@ -35,7 +50,7 @@ void Menu::draw()
     
     title.draw();
     
-    for(int i = 0; i < buttonList.size(); i++)
+    for(long unsigned int i = 0; i < buttonList.size(); i++)
     {
         buttonList[i].draw();
     }
@@ -43,9 +58,16 @@ void Menu::draw()
 }
 
 // button stuff
-void Menu::addTitle()
+void Menu::addTitle(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY)
 {
-    title.getRectangle()->h = 10;
+    title.initialize(renderer, theFile, width, height, positionX, positionY);
+    return;
+}
+
+void Menu::addTitle(SDL_Renderer *renderer, std::string theFile)
+{
+    title.initialize(renderer, theFile); 
+    return;
 }
 
 void Menu::addButton()
