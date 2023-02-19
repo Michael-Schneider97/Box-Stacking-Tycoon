@@ -37,17 +37,20 @@ int main()
 void mainMenuFunction()
 {
     // variables
+    // strings used for filepaths
     const std::string title = "Box Stacking Tycoon (Setup Display)",
-                      menuBackground = "../Assets/mainMenuBackground.bmp";
-
-    int screenWidth = 0, screenHeight = 0, 
-        mousePositionX = 0, mousePositionY = 0;
+                      menuBackground = "../Assets/mainMenuBackground.bmp",
+                      mainMenuPlayButton = "../Assets/assets/menus/main/playBoxesButton.bmp",
+                      mainMenuStatsButton = "../Assets/assets/menus/main/statsButton.bmp",
+                      mainMenuQuitButton = "../Assets/assets/menus/main/quitButton.bmp",
+                      titleFileLocation = "../Assets/mainMenuTitle.bmp";
     
+    int screenWidth = 0, screenHeight = 0, mousePositionX = 0, mousePositionY = 0;
     bool quit = false;
     SDL_Color black = {0, 0, 0, 255};
     SDL_Event userInput;
 
-    // get window size
+    // get screen size
     SDL_DisplayMode displayMode;
     if(SDL_GetDesktopDisplayMode(0, &displayMode) != 0)
     {
@@ -59,17 +62,22 @@ void mainMenuFunction()
     auto theWindow = 
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, displayMode.w, displayMode.h, SDL_WINDOW_RESIZABLE), SDL_DestroyWindow);
     // For some reason the above function call does not really center the window, so the next one moves it to where it actually should go
-    SDL_MaximizeWindow(theWindow.get());    
+    // Yes, I know this is hacky but hey, it works
+    SDL_MaximizeWindow(theWindow.get());
+    SDL_GetDesktopDisplayMode(0, &displayMode);
 
     // create a renderer
     auto theRenderer = 
-    std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC)), SDL_DestroyRenderer);
+    std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(theWindow.get(), -1, (SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)), SDL_DestroyRenderer);
     SDL_GetRendererOutputSize(theRenderer.get(), &screenWidth, &screenHeight);
 
     // create the menu
     Menu mainMenu(theRenderer.get(), menuBackground, screenWidth, screenHeight, 0, 0);
 
-    //mainMenu.addTitle();
+    // title and buttons
+    mainMenu.addTitle(theRenderer.get(), titleFileLocation);
+    mainMenu.autoGenerate(screenWidth, screenHeight);
+
     //mainMenu.addButton();
     //mainMenu.addButton();
     
