@@ -9,7 +9,7 @@ Button::Button() : GameObject()
 // mouse handler. Sets color on mouse over, use this in your game loop
 void Button::mouseHandler(int mouseX, int mouseY)
 {
-    if(mouseOver(mouseX, mouseY))
+    if(mouseOver(mouseX, mouseY) && clickable)
     {
         // set color to be a brighter red
         SDL_SetTextureColorMod(texture.get(), 255, 200, 200);
