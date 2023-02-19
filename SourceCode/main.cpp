@@ -76,6 +76,9 @@ void mainMenuFunction()
 
     // title and buttons
     mainMenu.addTitle(theRenderer.get(), titleFileLocation);
+    mainMenu.addButton(theRenderer.get(), mainMenuPlayButton);
+    mainMenu.addButton(theRenderer.get(), mainMenuStatsButton);
+    mainMenu.addButton(theRenderer.get(), mainMenuQuitButton);
     mainMenu.autoGenerate(screenWidth, screenHeight);
 
     //mainMenu.addButton();
