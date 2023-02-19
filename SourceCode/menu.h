@@ -12,8 +12,6 @@ class Menu : public GameObject
     protected:
         GameObject title;
         std::vector<Button> buttonList;
-        int buttonSpacing;
-        int titleSpacing;
 
     public:
         Menu();
@@ -21,9 +19,10 @@ class Menu : public GameObject
         Menu(SDL_Renderer *renderer, int width, int height, int x, int y, SDL_Color color);
         void draw();
         void generateRectangles();
-        void addTitle();
+        void addTitle(SDL_Renderer *renderer, std::string theFile);
+        void addTitle(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY);
         void addButton();
-        void autoGenerate();
+        void autoGenerate(int screenWidth, int screenHeight);
 };
 
 #endif
