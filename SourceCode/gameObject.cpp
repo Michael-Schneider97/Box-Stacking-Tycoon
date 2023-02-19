@@ -1,5 +1,6 @@
 // Note: Inclusion of SDL_image will allow refactoring of the setup texture function to be a bit more optimized
 #include "gameObject.h"
+#include <iostream>
 
 // default constructor
 GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0, 0, 255}, drawBackground {false}, gameRenderer {NULL}
@@ -11,7 +12,7 @@ GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0
 // constructor that uses a string and some ints 
 GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
 {
-    intialize(renderer, theFile, width, height, positionX, positionY);
+    initialize(renderer, theFile, width, height, positionX, positionY);
     return;
 }
 
@@ -19,7 +20,7 @@ GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, i
 void GameObject::initialize(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY) 
 {
     // file path
-    assetFilePath = theFile;
+    assetFilepath = theFile;
 
     // rect
     textureRectangle = std::make_unique<SDL_Rect>();
@@ -37,13 +38,19 @@ void GameObject::initialize(SDL_Renderer *renderer, std::string theFile, int wid
     return;
 }
 
-void initialize(SDL_Renderer *renderer, std::string theFIle)
+void GameObject::initialize(SDL_Renderer *renderer, std::string theFile)
 {
     // file path
-    assetFilePath = theFile;
+    assetFilepath = theFile;
+
+    // rect
+    textureRectangle = std::make_unique<SDL_Rect>();
 
     // renderer
     gameRenderer = renderer;
+
+    // texture
+    setupTexture();
 
     return;
 }
@@ -61,6 +68,12 @@ void GameObject::draw()
     else if (textureRectangle && gameRenderer)
     {
         SDL_SetRenderDrawColor(gameRenderer, baseColor.r, baseColor.g, baseColor.b, baseColor.a);
+        std::cout << "null texture detected\n";
+    }
+
+    else 
+    {
+        std::cout << "Draw error\n";
     }
     return;
 }
