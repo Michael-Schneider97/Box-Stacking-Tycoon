@@ -8,10 +8,13 @@ class Button : public GameObject
 {
     protected:
         bool clickable; 
+        void (&buttonFunction)(SDL_Renderer *renderer, int &screenWdith, int &screenHeight);
     public:
         Button();
         void setClickable(bool);
         bool getClickable();
+        void mouseHandler(int mouseX, int mouseY);
+        void setClickExecution(void (&theButtonFunction)(SDL_Renderer *renderer, int &screenWidth, int &screenHeight));
 };
 
 #endif
