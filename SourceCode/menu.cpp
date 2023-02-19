@@ -20,7 +20,7 @@ Menu::Menu(SDL_Renderer *renderer, std::string filePath, int width, int height, 
 // constructor that just stores the background as a solid color
 Menu::Menu(SDL_Renderer *renderer, int width, int height, int x, int y, SDL_Color color) : GameObject(renderer, "", width, height, x, y)
 {
-    
+    return;
 }
 
 // automatic button & title placement
@@ -70,7 +70,10 @@ void Menu::addTitle(SDL_Renderer *renderer, std::string theFile)
     return;
 }
 
-void Menu::addButton()
+void Menu::addButton(SDL_Renderer *renderer, std::string theFile)
 {
-
+    Button button;
+    button.initialize(renderer, theFile);
+    buttonList.push_back(button);
+    return;
 }
