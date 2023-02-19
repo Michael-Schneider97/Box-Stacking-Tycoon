@@ -27,6 +27,8 @@ class GameObject
         SDL_Rect* getRectangle();
         void draw();
         bool mouseOver(int, int);
+        void initialize(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY);
+        void initialize(SDL_Renderer *renderer, std::string theFIle);
     
     private:
         void setupTexture();

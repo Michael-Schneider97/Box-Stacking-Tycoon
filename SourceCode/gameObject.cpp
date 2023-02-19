@@ -11,10 +11,17 @@ GameObject::GameObject() : texture(nullptr, SDL_DestroyTexture), baseColor {0, 0
 // constructor that uses a string and some ints 
 GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY) : texture(nullptr, SDL_DestroyTexture)
 {
-    // setup the filepath
-    assetFilepath = theFile;
+    intialize(renderer, theFile, width, height, positionX, positionY);
+    return;
+}
 
-    // setup the rect
+// Initializers. Used for cases where constructors cant easily be called or when an object needs to be updated in some way
+void GameObject::initialize(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY) 
+{
+    // file path
+    assetFilePath = theFile;
+
+    // rect
     textureRectangle = std::make_unique<SDL_Rect>();
     textureRectangle.get()->h = height;
     textureRectangle.get()->w = width;
@@ -26,6 +33,19 @@ GameObject::GameObject(SDL_Renderer *renderer, std::string theFile, int width, i
 
     // setup the texture
     setupTexture();
+
+    return;
+}
+
+void initialize(SDL_Renderer *renderer, std::string theFIle)
+{
+    // file path
+    assetFilePath = theFile;
+
+    // renderer
+    gameRenderer = renderer;
+
+    return;
 }
 
 // put the object on the screen
