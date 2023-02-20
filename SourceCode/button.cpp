@@ -47,3 +47,8 @@ void Button::setQuitButton()
 {
     quit = true;
 }
+
+bool Button::getQuitButton()
+{
+    return quit;
+}
