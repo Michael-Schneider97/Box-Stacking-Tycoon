@@ -14,8 +14,14 @@
 #include <memory>
 
 #include "menu.h"
+// arguments for all games and funcitons branching out from mainMenuFunction.
+// we pass the renderer for SDL. screen width and height for calculating rects, and an event input reference for handling user input
+#define gameParamMacro_ SDL_Renderer *theGameRenderer, int &screenWidth, int &screenHeight, SDL_Event &input
 
 void mainMenuFunction();
+void displayStatistics();
+void playBoxTycoon();
+void openOptions();
 
 int main()
 {
@@ -76,9 +82,9 @@ void mainMenuFunction()
 
     // title and buttons
     mainMenu.addTitle(theRenderer.get(), titleFileLocation);
-    mainMenu.addButton(theRenderer.get(), mainMenuPlayButton);
-    mainMenu.addButton(theRenderer.get(), mainMenuStatsButton);
-    mainMenu.addButton(theRenderer.get(), mainMenuQuitButton);
+    mainMenu.addButton(theRenderer.get(), mainMenuPlayButton, playBoxTycoon);
+    mainMenu.addButton(theRenderer.get(), mainMenuStatsButton, displayStatistics);
+    mainMenu.addButton(theRenderer.get(), mainMenuQuitButton, true);
     mainMenu.autoGenerate(screenWidth, screenHeight);
 
     //mainMenu.addButton();
@@ -99,4 +105,3 @@ void mainMenuFunction()
 
     } while (!quit);
 }
-
