@@ -25,8 +25,16 @@ void Button::mouseHandler(int mouseX, int mouseY, SDL_Event &input, int &screenW
         // if user clicks, we execute a certain function, provided by the initialization (reconstruction)
         if(input.type == SDL_MOUSEBUTTONDOWN && input.button.button == SDL_BUTTON_LEFT)
         {
-            buttonFunction(gameRenderer, screenWidth, screenHeight, input);
-            return;
+            if(!quit)
+            {
+                buttonFunction(gameRenderer, screenWidth, screenHeight, input);
+                return;
+            }
+            else
+            {
+                input.type = SDL_QUIT;
+                return;
+            }
         }
     }
     else 
