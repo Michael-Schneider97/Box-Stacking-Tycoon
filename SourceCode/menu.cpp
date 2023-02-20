@@ -70,10 +70,20 @@ void Menu::addTitle(SDL_Renderer *renderer, std::string theFile)
     return;
 }
 
-void Menu::addButton(SDL_Renderer *renderer, std::string theFile)
+void Menu::addButton(SDL_Renderer *renderer, std::string theFile, buttonFunctionMacro_)
 {
     Button button;
     button.initialize(renderer, theFile);
+    button.setClickExecution(someButtonFunction);
+    buttonList.push_back(button);
+    return;
+}
+
+void Menu::addButton(SDL_Renderer *renderer, std::string theFile, bool isQuit)
+{
+    Button button;
+    button.initialize(renderer, theFile);
+    button.setQuitButton();
     buttonList.push_back(button);
     return;
 }
