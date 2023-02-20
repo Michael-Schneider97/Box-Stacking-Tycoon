@@ -21,7 +21,8 @@ class Menu : public GameObject
         void generateRectangles();
         void addTitle(SDL_Renderer *renderer, std::string theFile);
         void addTitle(SDL_Renderer *renderer, std::string theFile, int width, int height, int positionX, int positionY);
-        void addButton(SDL_Renderer *renderer, std::string theFile);
+        void addButton(SDL_Renderer *renderer, std::string theFile, buttonFunctionMacro_);
+        void addButton(SDL_Renderer *renderer, std::string theFile, bool isQuit);
         void autoGenerate(int screenWidth, int screenHeight);
 };
 
