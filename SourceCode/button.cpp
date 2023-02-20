@@ -1,9 +1,10 @@
 #include "button.h"
 
+
 // default constructor
 Button::Button() : GameObject(), quit(false), clickable(true) // clickable is true by default
 {
-    return
+    return;
 }
 
 // mutator function for clickability
@@ -24,7 +25,7 @@ void Button::mouseHandler(int mouseX, int mouseY, SDL_Event &input, int &screenW
         // if user clicks, we execute a certain function, provided by the initialization (reconstruction)
         if(input.type == SDL_MOUSEBUTTONDOWN && input.button.button == SDL_BUTTON_LEFT)
         {
-            buttonFunction(gameRenderer, screenWidth, screenHeight);
+            buttonFunction(gameRenderer, screenWidth, screenHeight, input);
             return;
         }
     }
@@ -38,9 +39,9 @@ void Button::mouseHandler(int mouseX, int mouseY, SDL_Event &input, int &screenW
 }
 
 // set click execution. allows some action to be executed without cluttering your gameloop
-void Button::setClickExecution(void (&theButtonFunction)(SDL_Renderer *renderer, int &screenWidth, int &screenHeight))
+void Button::setClickExecution(buttonFunctionMacro_)
 {
-    buttonFunction = &theButtonFunction;
+    buttonFunction = someButtonFunction;
 }
 
 void Button::setQuitButton()
